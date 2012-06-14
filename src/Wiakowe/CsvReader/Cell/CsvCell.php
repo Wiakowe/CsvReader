@@ -11,11 +11,15 @@ use Wiakowe\CsvReader\Column\CsvColumn;
  */
 class CsvCell
 {
+    protected $content;
+
     /**
      * @param string    $content
      */
     public function __construct($content)
-    {}
+    {
+        $this->content = (string) $content;
+    }
 
     /**
      * Sets the CsvRow to which this cell belongs.
@@ -55,7 +59,9 @@ class CsvCell
      * @return boolean
      */
     public function isEmpty()
-    {}
+    {
+        return '' === $this->content;
+    }
 
     /**
      * Returns the content of the cell, as an string.
@@ -63,5 +69,7 @@ class CsvCell
      * @return string
      */
     public function getContent()
-    {}
+    {
+        return $this->content;
+    }
 }
