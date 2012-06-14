@@ -18,10 +18,11 @@ class CsvCellTest extends \PHPUnit_Framework_TestCase
             'The content of an empty cell should be an empty string.');
     }
 
-    public function testCellWithContentIsntEmpty()
+    /**
+     * @dataProvider cellContentProvider
+     */
+    public function testCellWithContentIsntEmpty($content)
     {
-        $content = 'Cell with content';
-
         $cell = new CsvCell($content);
 
         $this->assertFalse($cell->isEmpty(),
@@ -37,11 +38,40 @@ class CsvCellTest extends \PHPUnit_Framework_TestCase
 
     public function testCellWithSetColumnReturnsIt()
     {
-        $this->markTestIncomplete();
+        $cell = new CsvCell('dummy content');
+
+        $this->assertNull($cell->getCsvColumn(),
+            'If the column hasn\'t been set, it should be "null".');
+
+        $csvColumn = \Mockery::mock('Wiakowe\CsvReader\Column\CsvColumn');
+
+        $cell->setColumn($csvColumn);
+
+        $this->assertSame($csvColumn, $cell->getCsvColumn(),
+            'The csv column should be the one that was given with "set".');
     }
 
     public function testCellWithSetRowReturnsIt()
     {
-        $this->markTestIncomplete();
+        $cell = new CsvCell('dummy content');
+
+        $this->assertNull($cell->getCsvColumn(),
+            'If the row hasn\'t been set, it should be "null".');
+
+        $csvRow = \Mockery::mock('Wiakowe\CsvReader\Row\CsvRow');
+
+        $cell->setRow($csvRow);
+
+        $this->assertSame($csvRow, $cell->getCsvRow(),
+            'The csv row should be the one that was given with "set".');
+    }
+
+    public static function cellContentProvider()
+    {
+        return array(
+            array('Content 1'),
+            array('Content 2'),
+            array(123)
+        );
     }
 }
