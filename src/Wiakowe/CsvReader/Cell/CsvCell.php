@@ -12,6 +12,8 @@ use Wiakowe\CsvReader\Column\CsvColumn;
 class CsvCell
 {
     protected $content;
+    protected $row;
+    protected $column;
 
     /**
      * @param string    $content
@@ -27,7 +29,9 @@ class CsvCell
      * @param CsvRow $row
      */
     public function setRow(CsvRow $row)
-    {}
+    {
+        $this->row = $row;
+    }
 
     /**
      * Sets the CsvColumn to which this cell belongs.
@@ -35,7 +39,9 @@ class CsvCell
      * @param CsvColumn $column
      */
     public function setColumn(CsvColumn $column)
-    {}
+    {
+        $this->column = $column;
+    }
 
     /**
      * Gets the CSV Row at which this cell belongs.
@@ -43,7 +49,9 @@ class CsvCell
      * @return \Wiakowe\CsvReader\Row\CsvRow
      */
     public function getCsvRow()
-    {}
+    {
+        return $this->row;
+    }
 
     /**
      * Gets the CSV Column at which this cell belongs.
@@ -51,7 +59,9 @@ class CsvCell
      * @return \Wiakowe\CsvReader\Column\CsvColumn
      */
     public function getCsvColumn()
-    {}
+    {
+        return $this->column;
+    }
 
     /**
      * Returns true if this cell content is completely empty, false otherwise.
