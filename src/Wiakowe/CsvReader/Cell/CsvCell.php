@@ -11,11 +11,17 @@ use Wiakowe\CsvReader\Column\CsvColumn;
  */
 class CsvCell
 {
+    protected $content;
+    protected $row;
+    protected $column;
+
     /**
      * @param string    $content
      */
     public function __construct($content)
-    {}
+    {
+        $this->content = (string) $content;
+    }
 
     /**
      * Sets the CsvRow to which this cell belongs.
@@ -23,7 +29,9 @@ class CsvCell
      * @param CsvRow $row
      */
     public function setRow(CsvRow $row)
-    {}
+    {
+        $this->row = $row;
+    }
 
     /**
      * Sets the CsvColumn to which this cell belongs.
@@ -31,7 +39,9 @@ class CsvCell
      * @param CsvColumn $column
      */
     public function setColumn(CsvColumn $column)
-    {}
+    {
+        $this->column = $column;
+    }
 
     /**
      * Gets the CSV Row at which this cell belongs.
@@ -39,7 +49,9 @@ class CsvCell
      * @return \Wiakowe\CsvReader\Row\CsvRow
      */
     public function getCsvRow()
-    {}
+    {
+        return $this->row;
+    }
 
     /**
      * Gets the CSV Column at which this cell belongs.
@@ -47,7 +59,9 @@ class CsvCell
      * @return \Wiakowe\CsvReader\Column\CsvColumn
      */
     public function getCsvColumn()
-    {}
+    {
+        return $this->column;
+    }
 
     /**
      * Returns true if this cell content is completely empty, false otherwise.
@@ -55,7 +69,9 @@ class CsvCell
      * @return boolean
      */
     public function isEmpty()
-    {}
+    {
+        return '' === $this->content;
+    }
 
     /**
      * Returns the content of the cell, as an string.
@@ -63,5 +79,7 @@ class CsvCell
      * @return string
      */
     public function getContent()
-    {}
+    {
+        return $this->content;
+    }
 }
