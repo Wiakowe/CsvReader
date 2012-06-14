@@ -1,2 +1,4 @@
 # PhpStorm configuration
 .idea
+# Composer files
+vendor

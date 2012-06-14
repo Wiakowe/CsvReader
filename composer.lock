@@ -1,0 +1,19 @@
+{
+    "hash": "f452545f2dc34c2eb346656cc61a462d",
+    "packages": [
+
+    ],
+    "packages-dev": [
+        {
+            "package": "mockery/mockery",
+            "version": "0.7.2"
+        }
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "dev",
+    "stability-flags": [
+
+    ]
+}
