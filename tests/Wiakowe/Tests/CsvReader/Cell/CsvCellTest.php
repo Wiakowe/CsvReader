@@ -3,11 +3,7 @@ namespace Wiakowe\Tests\CsvReader\Cell;
 
 use Wiakowe\CsvReader\Cell\CsvCell;
 /**
- * Created by JetBrains PhpStorm.
- * User: lumbendil
- * Date: 6/14/12
- * Time: 5:00 PM
- * To change this template use File | Settings | File Templates.
+ * Tests for the CsvCell class.
  */
 class CsvCellTest extends \PHPUnit_Framework_TestCase
 {
