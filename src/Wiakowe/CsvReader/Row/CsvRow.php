@@ -7,6 +7,13 @@ namespace Wiakowe\CsvReader\Row;
 class CsvRow
 {
     /**
+     * @param integer                           $position
+     * @param \Wiakowe\CsvReader\Cell\CsvCell[] $csvCells
+     */
+    public function __construct($position, array $csvCells)
+    {}
+
+    /**
      * The row position in the CSV, starting from 1.
      */
     public function getRowPosition()

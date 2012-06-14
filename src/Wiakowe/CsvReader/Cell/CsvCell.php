@@ -1,6 +1,9 @@
 <?php
 namespace Wiakowe\CsvReader\Cell;
 
+use Wiakowe\CsvReader\Row\CsvRow;
+use Wiakowe\CsvReader\Column\CsvColumn;
+
 /**
  * Content of a single CSV cell.
  *
@@ -8,6 +11,28 @@ namespace Wiakowe\CsvReader\Cell;
  */
 class CsvCell
 {
+    /**
+     * @param string    $content
+     */
+    public function __construct($content)
+    {}
+
+    /**
+     * Sets the CsvRow to which this cell belongs.
+     *
+     * @param CsvRow $row
+     */
+    public function setRow(CsvRow $row)
+    {}
+
+    /**
+     * Sets the CsvColumn to which this cell belongs.
+     *
+     * @param CsvColumn $column
+     */
+    public function setColumn(CsvColumn $column)
+    {}
+
     /**
      * Gets the CSV Row at which this cell belongs.
      *

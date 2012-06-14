@@ -1,6 +1,8 @@
 <?php
 namespace Wiakowe\CsvReader\Column;
 
+use Wiakowe\CsvReader\Header\CsvHeaderCell;
+
 /**
  * Column of a CSV file.
  *
@@ -8,6 +10,18 @@ namespace Wiakowe\CsvReader\Column;
  */
 class CsvColumn
 {
+    /**
+     * @param \Wiakowe\CsvReader\Cell\CsvCell[] $csvCells
+     */
+    public function __construct(array $csvCells)
+    {}
+
+    /**
+     * @param CsvHeaderCell $headerCell
+     */
+    public function setCsvHeaderCell(CsvHeaderCell $headerCell)
+    {}
+
     /**
      * Returns the header cell which identifies this column.
      *
@@ -17,7 +31,8 @@ class CsvColumn
     {}
 
     /**
-     * Returns true if the callable returns true for all the elements in the column.
+     * Returns true if the callable returns true for all the elements in the
+     * column.
      *
      * @param string|array|\Closure $condition
      *
@@ -29,7 +44,7 @@ class CsvColumn
     /**
      * Returns the cell for the given row.
      *
-     * @param $row
+     * @param integer $row
      *
      * @return \Wiakowe\CsvReader\Cell\CsvCell
      *

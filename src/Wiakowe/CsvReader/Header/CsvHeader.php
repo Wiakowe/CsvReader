@@ -7,6 +7,12 @@ namespace Wiakowe\CsvReader\Header;
 class CsvHeader
 {
     /**
+     * @param CsvHeaderCell[] $headerCells
+     */
+    public function __construct(array $headerCells)
+    {}
+
+    /**
      * The total number of headers, which should be equal to the number of rows
      * returned by <code>CsvFile::getNumRows()</code>.
      *
