@@ -12,6 +12,8 @@ class CsvFile
      * @param $inputFile
      * @param bool $hasHeaders If set to true, the headers are assumed to be on
      * the first row. Otherwise, the first row is considered a data row as well.
+     *
+     * @throws \Wiakowe\CsvReader\Exception\FileNotReadableException
      */
     public function __construct($inputFile, $hasHeaders = true)
     {}
