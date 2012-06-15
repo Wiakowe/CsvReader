@@ -36,7 +36,7 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
 
         $this->content = array($this->cellMock, $cellMock2);
 
-        $this->csvColumn = new CsvColumn($this->content);
+        $this->csvColumn = new CsvColumn(1, $this->content);
     }
 
     /**
@@ -44,7 +44,7 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAllCells(array $cellArray)
     {
-        $csvColumn = new CsvColumn($cellArray);
+        $csvColumn = new CsvColumn(1, $cellArray);
 
         $cellsFromGetCells = $csvColumn->getCells();
 
@@ -93,7 +93,7 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
                 ->atLeast()->once();
         }
 
-        new CsvColumn($this->content);
+        new CsvColumn(1, $this->content);
     }
 
     public function testGetCell()
@@ -145,5 +145,11 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
                     array(1));
             }),
             'Should be true if the condition is false for any cell.');
+    }
+
+    public function testGetColumnPosition()
+    {
+        $this->assertEquals(1, $this->csvColumn->getColumnPosition(),
+            'The column position should be the one set in the position.');
     }
 }

@@ -11,19 +11,22 @@ use Wiakowe\CsvReader\Exception\CellNotFoundException;
  */
 class CsvColumn
 {
+    protected $position;
     protected $cells;
     protected $headerCell;
 
     /**
+     * @param integer                           $position
      * @param \Wiakowe\CsvReader\Cell\CsvCell[] $csvCells
      */
-    public function __construct(array $csvCells)
+    public function __construct($position, array $csvCells)
     {
         foreach ($csvCells as $cell) {
             $cell->setColumn($this);
         }
 
-        $this->cells = $csvCells;
+        $this->cells    = $csvCells;
+        $this->position = $position;
     }
 
     /**
@@ -92,5 +95,15 @@ class CsvColumn
     public function getCells()
     {
         return $this->cells;
+    }
+
+    /**
+     * Gets the column position.
+     *
+     * @return integer
+     */
+    public function getColumnPosition()
+    {
+        return $this->position;
     }
 }
