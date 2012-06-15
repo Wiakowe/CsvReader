@@ -5,8 +5,19 @@ use Wiakowe\CsvReader\Column\CsvColumn;
 
 class CsvColumnTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var \Mockery\MockInterface|\Wiakowe\CsvReader\Cell\CsvCell
+     */
     protected $cellMock;
+
+    /**
+     * @var CsvColumn
+     */
     protected $csvColumn;
+
+    /**
+     * @var \Mockery\MockInterface[]|\Wiakowe\CsvReader\Cell\CsvCell[]
+     */
     protected $content;
 
     public function setUp()
@@ -14,6 +25,9 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
         $this->cellMock = \Mockery::mock('\Wiakowe\CsvReader\Cell\CsvCell');
 
         $this->cellMock->shouldIgnoreMissing();
+
+        $this->cellMock->shouldReceive('getCsvRow->getRowPosition')
+                    ->andReturn(1)->byDefault();
 
         $this->content = array($this->cellMock);
 
@@ -74,7 +88,22 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
                 ->atLeast()->once();
         }
 
-
         new CsvColumn($this->content);
+    }
+
+    public function testGetCell()
+    {
+        $cell = $this->csvColumn->getCell(1);
+
+        $this->assertSame($this->cellMock, $cell,
+            'The cell should be returned by the call to CsvColumn::getCell()');
+    }
+
+    /**
+     * @expectedException \Wiakowe\CsvReader\Exception\CellNotFoundException
+     */
+    public function testGetCellWithoutExistingCell()
+    {
+        $cell = $this->csvColumn->getCell(5);
     }
 }
