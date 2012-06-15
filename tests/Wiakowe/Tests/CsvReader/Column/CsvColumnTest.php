@@ -27,11 +27,28 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testConstructor()
+    {
+        $cell = \Mockery::mock('\Wiakowe\CsvReader\Cell\CsvCell');
+
+        $cellArray = array($cell);
+        $cell->shouldReceive('setColumn')
+            ->with(\Mockery::type('\Wiakowe\CsvReader\Column\CsvColumn'))
+            ->atLeast()->once();
+
+        new CsvColumn($cellArray);
+
+    }
+
     public static function cellDataProvider()
     {
         $cell1 = \Mockery::mock('\Wiakowe\CsvReader\Cell\CsvCell');
         $cell2 = \Mockery::mock('\Wiakowe\CsvReader\Cell\CsvCell');
         $cell3 = \Mockery::mock('\Wiakowe\CsvReader\Cell\CsvCell');
+
+        $cell1->shouldIgnoreMissing();
+        $cell2->shouldIgnoreMissing();
+        $cell3->shouldIgnoreMissing();
 
         return array(
             array(
