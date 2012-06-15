@@ -52,4 +52,12 @@ class CsvColumn
      */
     public function getCell($row)
     {}
+
+    /**
+     * Gets all the cells.
+     *
+     * @return \Wiakowe\CsvReader\Cell\CsvCell[]
+     */
+    public function getCells()
+    {}
 }
