@@ -55,7 +55,7 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
             'Wiakowe\CsvReader\Cell\CsvCell', $cellsFromGetCells,
             null, 'The return from must only contain CsvCells');
 
-        foreach($cellArray as $cell) {
+        foreach ($cellArray as $cell) {
             $this->assertContains($cell, $cellsFromGetCells,
                 'The getCells must contain the cells that where given to it');
         }
@@ -87,7 +87,7 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructor()
     {
-        foreach($this->content as $cell) {
+        foreach ($this->content as $cell) {
             $cell->shouldReceive('setColumn')
                 ->with(\Mockery::type('\Wiakowe\CsvReader\Column\CsvColumn'))
                 ->atLeast()->once();
@@ -135,12 +135,14 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
         });
 
         $this->assertTrue($this->csvColumn->forAll(function($cell) {
-                return in_array($cell->getCsvRow()->getRowPosition(), array(1, 2));
+                return in_array($cell->getCsvRow()->getRowPosition(),
+                    array(1, 2));
             }),
             'Should be true if the condition is true for all the cells.');
 
         $this->assertFalse($this->csvColumn->forAll(function($cell) {
-                return in_array($cell->getCsvRow()->getRowPosition(), array(1));
+                return in_array($cell->getCsvRow()->getRowPosition(),
+                    array(1));
             }),
             'Should be true if the condition is false for any cell.');
     }

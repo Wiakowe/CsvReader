@@ -19,7 +19,7 @@ class CsvColumn
      */
     public function __construct(array $csvCells)
     {
-        foreach($csvCells as $cell) {
+        foreach ($csvCells as $cell) {
             $cell->setColumn($this);
         }
 
@@ -54,7 +54,7 @@ class CsvColumn
      */
     public function forAll($condition)
     {
-        foreach($this->cells as $cell) {
+        foreach ($this->cells as $cell) {
             if (!call_user_func($condition, $cell)) {
                 return false;
             }
