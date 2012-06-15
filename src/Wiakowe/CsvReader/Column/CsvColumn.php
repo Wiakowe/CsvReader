@@ -2,6 +2,7 @@
 namespace Wiakowe\CsvReader\Column;
 
 use Wiakowe\CsvReader\Header\CsvHeaderCell;
+use Wiakowe\CsvReader\Exception\CellNotFoundException;
 
 /**
  * Column of a CSV file.
@@ -10,17 +11,28 @@ use Wiakowe\CsvReader\Header\CsvHeaderCell;
  */
 class CsvColumn
 {
+    protected $cells;
+    protected $headerCell;
+
     /**
      * @param \Wiakowe\CsvReader\Cell\CsvCell[] $csvCells
      */
     public function __construct(array $csvCells)
-    {}
+    {
+        foreach($csvCells as $cell) {
+            $cell->setColumn($this);
+        }
+
+        $this->cells = $csvCells;
+    }
 
     /**
      * @param CsvHeaderCell $headerCell
      */
     public function setCsvHeaderCell(CsvHeaderCell $headerCell)
-    {}
+    {
+        $this->headerCell = $headerCell;
+    }
 
     /**
      * Returns the header cell which identifies this column.
@@ -28,7 +40,9 @@ class CsvColumn
      * @return \Wiakowe\CsvReader\Header\CsvHeaderCell
      */
     public function getHeaderCell()
-    {}
+    {
+        return $this->headerCell;
+    }
 
     /**
      * Returns true if the callable returns true for all the elements in the
@@ -39,7 +53,15 @@ class CsvColumn
      * @return boolean
      */
     public function forAll($condition)
-    {}
+    {
+        foreach($this->cells as $cell) {
+            if (!call_user_func($condition, $cell)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     /**
      * Returns the cell for the given row.
@@ -51,7 +73,16 @@ class CsvColumn
      * @throws \Wiakowe\CsvReader\Exception\CellNotFoundException
      */
     public function getCell($row)
-    {}
+    {
+        foreach ($this->cells as $cell) {
+            if ($cell->getCsvRow()->getRowPosition() === $row) {
+                return $cell;
+            }
+        }
+
+        throw new CellNotFoundException(
+            'That cell doesn\'t exist in the column');
+    }
 
     /**
      * Gets all the cells.
@@ -59,5 +90,7 @@ class CsvColumn
      * @return \Wiakowe\CsvReader\Cell\CsvCell[]
      */
     public function getCells()
-    {}
+    {
+        return $this->cells;
+    }
 }
