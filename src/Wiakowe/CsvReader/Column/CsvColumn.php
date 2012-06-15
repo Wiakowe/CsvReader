@@ -12,6 +12,7 @@ use Wiakowe\CsvReader\Exception\CellNotFoundException;
 class CsvColumn
 {
     protected $cells;
+    protected $headerCell;
 
     /**
      * @param \Wiakowe\CsvReader\Cell\CsvCell[] $csvCells
@@ -29,7 +30,9 @@ class CsvColumn
      * @param CsvHeaderCell $headerCell
      */
     public function setCsvHeaderCell(CsvHeaderCell $headerCell)
-    {}
+    {
+        $this->headerCell = $headerCell;
+    }
 
     /**
      * Returns the header cell which identifies this column.
@@ -37,7 +40,9 @@ class CsvColumn
      * @return \Wiakowe\CsvReader\Header\CsvHeaderCell
      */
     public function getHeaderCell()
-    {}
+    {
+        return $this->headerCell;
+    }
 
     /**
      * Returns true if the callable returns true for all the elements in the
@@ -48,7 +53,15 @@ class CsvColumn
      * @return boolean
      */
     public function forAll($condition)
-    {}
+    {
+        foreach($this->cells as $cell) {
+            if (!call_user_func($condition, $cell)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     /**
      * Returns the cell for the given row.
