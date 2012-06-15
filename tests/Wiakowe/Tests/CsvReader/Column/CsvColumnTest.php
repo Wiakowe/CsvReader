@@ -23,13 +23,18 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->cellMock = \Mockery::mock('\Wiakowe\CsvReader\Cell\CsvCell');
+        $cellMock2      = \Mockery::mock('\Wiakowe\CsvReader\Cell\CsvCell');
 
+        $cellMock2->shouldIgnoreMissing();
         $this->cellMock->shouldIgnoreMissing();
 
         $this->cellMock->shouldReceive('getCsvRow->getRowPosition')
                     ->andReturn(1)->byDefault();
 
-        $this->content = array($this->cellMock);
+        $cellMock2->shouldReceive('getCsvRow->getRowPosition')
+                    ->andReturn(2)->byDefault();
+
+        $this->content = array($this->cellMock, $cellMock2);
 
         $this->csvColumn = new CsvColumn($this->content);
     }
@@ -105,5 +110,38 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
     public function testGetCellWithoutExistingCell()
     {
         $cell = $this->csvColumn->getCell(5);
+    }
+
+    public function testGetHeaderCell()
+    {
+        $this->assertNull($this->csvColumn->getHeaderCell(),
+            'The header cell should be null if it hasn\'t been set.');
+
+        $headerCell = \Mockery::mock('\Wiakowe\CsvReader\Header\CsvHeaderCell');
+
+        $this->csvColumn->setCsvHeaderCell($headerCell);
+
+        $this->assertSame($headerCell, $this->csvColumn->getHeaderCell(),
+            'The header cell should have the value of the set object.');
+    }
+
+    public function testForAll()
+    {
+        $this->csvColumn->forAll(function($cell) {
+            $this->assertInstanceOf('\Wiakowe\CsvReader\Cell\CsvCell', $cell,
+                'The cell should be an element of CsvCell.');
+
+            return true;
+        });
+
+        $this->assertTrue($this->csvColumn->forAll(function($cell) {
+                return in_array($cell->getCsvRow()->getRowPosition(), array(1, 2));
+            }),
+            'Should be true if the condition is true for all the cells.');
+
+        $this->assertFalse($this->csvColumn->forAll(function($cell) {
+                return in_array($cell->getCsvRow()->getRowPosition(), array(1));
+            }),
+            'Should be true if the condition is false for any cell.');
     }
 }
