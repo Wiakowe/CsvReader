@@ -36,7 +36,7 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
 
         $this->content = array($this->cellMock, $cellMock2);
 
-        $this->csvColumn = new CsvColumn($this->content);
+        $this->csvColumn = new CsvColumn(1, $this->content);
     }
 
     /**
@@ -44,7 +44,7 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAllCells(array $cellArray)
     {
-        $csvColumn = new CsvColumn($cellArray);
+        $csvColumn = new CsvColumn(1, $cellArray);
 
         $cellsFromGetCells = $csvColumn->getCells();
 
@@ -55,7 +55,7 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
             'Wiakowe\CsvReader\Cell\CsvCell', $cellsFromGetCells,
             null, 'The return from must only contain CsvCells');
 
-        foreach($cellArray as $cell) {
+        foreach ($cellArray as $cell) {
             $this->assertContains($cell, $cellsFromGetCells,
                 'The getCells must contain the cells that where given to it');
         }
@@ -87,13 +87,13 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructor()
     {
-        foreach($this->content as $cell) {
+        foreach ($this->content as $cell) {
             $cell->shouldReceive('setColumn')
                 ->with(\Mockery::type('\Wiakowe\CsvReader\Column\CsvColumn'))
                 ->atLeast()->once();
         }
 
-        new CsvColumn($this->content);
+        new CsvColumn(1, $this->content);
     }
 
     public function testGetCell()
@@ -135,13 +135,21 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
         });
 
         $this->assertTrue($this->csvColumn->forAll(function($cell) {
-                return in_array($cell->getCsvRow()->getRowPosition(), array(1, 2));
+                return in_array($cell->getCsvRow()->getRowPosition(),
+                    array(1, 2));
             }),
             'Should be true if the condition is true for all the cells.');
 
         $this->assertFalse($this->csvColumn->forAll(function($cell) {
-                return in_array($cell->getCsvRow()->getRowPosition(), array(1));
+                return in_array($cell->getCsvRow()->getRowPosition(),
+                    array(1));
             }),
             'Should be true if the condition is false for any cell.');
+    }
+
+    public function testGetColumnPosition()
+    {
+        $this->assertEquals(1, $this->csvColumn->getColumnPosition(),
+            'The column position should be the one set in the position.');
     }
 }
