@@ -15,9 +15,10 @@ class CsvColumn
     protected $headerCell;
 
     /**
+     * @param integer                           $position
      * @param \Wiakowe\CsvReader\Cell\CsvCell[] $csvCells
      */
-    public function __construct(array $csvCells)
+    public function __construct($position, array $csvCells)
     {
         foreach ($csvCells as $cell) {
             $cell->setColumn($this);
@@ -93,4 +94,12 @@ class CsvColumn
     {
         return $this->cells;
     }
+
+    /**
+     * Gets the column position.
+     *
+     * @return integer
+     */
+    public function getColumnPosition()
+    {}
 }
