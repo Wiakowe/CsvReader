@@ -18,8 +18,8 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
             'The return must be an array.');
 
         $this->assertContainsOnly(
-            '\Wiakowe\CsvReader\Cell\CsvCell', $cellsFromGetCells,
-            'The return from must only contain CsvCells');
+            'Wiakowe\CsvReader\Cell\CsvCell', $cellsFromGetCells,
+            null, 'The return from must only contain CsvCells');
 
         foreach($cellArray as $cell) {
             $this->assertContains($cell, $cellsFromGetCells,
