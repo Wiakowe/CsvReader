@@ -10,11 +10,19 @@ use Wiakowe\CsvReader\Header\CsvHeaderCell;
  */
 class CsvColumn
 {
+    protected $cells;
+
     /**
      * @param \Wiakowe\CsvReader\Cell\CsvCell[] $csvCells
      */
     public function __construct(array $csvCells)
-    {}
+    {
+        foreach($csvCells as $cell) {
+            $cell->setColumn($this);
+        }
+
+        $this->cells = $csvCells;
+    }
 
     /**
      * @param CsvHeaderCell $headerCell
@@ -59,5 +67,7 @@ class CsvColumn
      * @return \Wiakowe\CsvReader\Cell\CsvCell[]
      */
     public function getCells()
-    {}
+    {
+        return $this->cells;
+    }
 }
