@@ -11,6 +11,7 @@ use Wiakowe\CsvReader\Exception\CellNotFoundException;
  */
 class CsvColumn
 {
+    protected $position;
     protected $cells;
     protected $headerCell;
 
@@ -24,7 +25,8 @@ class CsvColumn
             $cell->setColumn($this);
         }
 
-        $this->cells = $csvCells;
+        $this->cells    = $csvCells;
+        $this->position = $position;
     }
 
     /**
@@ -101,5 +103,7 @@ class CsvColumn
      * @return integer
      */
     public function getColumnPosition()
-    {}
+    {
+        return $this->position;
+    }
 }
