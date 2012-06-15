@@ -5,6 +5,21 @@ use Wiakowe\CsvReader\Column\CsvColumn;
 
 class CsvColumnTest extends \PHPUnit_Framework_TestCase
 {
+    protected $cellMock;
+    protected $csvColumn;
+    protected $content;
+
+    public function setUp()
+    {
+        $this->cellMock = \Mockery::mock('\Wiakowe\CsvReader\Cell\CsvCell');
+
+        $this->cellMock->shouldIgnoreMissing();
+
+        $this->content = array($this->cellMock);
+
+        $this->csvColumn = new CsvColumn($this->content);
+    }
+
     /**
      * @dataProvider cellDataProvider
      */
@@ -25,19 +40,6 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
             $this->assertContains($cell, $cellsFromGetCells,
                 'The getCells must contain the cells that where given to it');
         }
-    }
-
-    public function testConstructor()
-    {
-        $cell = \Mockery::mock('\Wiakowe\CsvReader\Cell\CsvCell');
-
-        $cellArray = array($cell);
-        $cell->shouldReceive('setColumn')
-            ->with(\Mockery::type('\Wiakowe\CsvReader\Column\CsvColumn'))
-            ->atLeast()->once();
-
-        new CsvColumn($cellArray);
-
     }
 
     public static function cellDataProvider()
@@ -62,5 +64,17 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
                 array()
             )
         );
+    }
+
+    public function testConstructor()
+    {
+        foreach($this->content as $cell) {
+            $cell->shouldReceive('setColumn')
+                ->with(\Mockery::type('\Wiakowe\CsvReader\Column\CsvColumn'))
+                ->atLeast()->once();
+        }
+
+
+        new CsvColumn($this->content);
     }
 }
