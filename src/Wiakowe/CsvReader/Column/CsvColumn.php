@@ -2,6 +2,7 @@
 namespace Wiakowe\CsvReader\Column;
 
 use Wiakowe\CsvReader\Header\CsvHeaderCell;
+use Wiakowe\CsvReader\Exception\CellNotFoundException;
 
 /**
  * Column of a CSV file.
@@ -59,7 +60,16 @@ class CsvColumn
      * @throws \Wiakowe\CsvReader\Exception\CellNotFoundException
      */
     public function getCell($row)
-    {}
+    {
+        foreach ($this->cells as $cell) {
+            if ($cell->getCsvRow()->getRowPosition() === $row) {
+                return $cell;
+            }
+        }
+
+        throw new CellNotFoundException(
+            'That cell doesn\'t exist in the column');
+    }
 
     /**
      * Gets all the cells.

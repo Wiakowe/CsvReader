@@ -4,5 +4,5 @@ namespace Wiakowe\CsvReader\Exception;
 /**
  * Base exception class.
  */
-class Exception
+class Exception extends \Exception
 {}
