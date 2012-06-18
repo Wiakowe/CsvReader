@@ -72,9 +72,12 @@ class CsvFile
             $column = new CsvColumn($columnPosition, $columnData);
 
             if ($hasHeaders) {
-                $headerCells[] = new CsvHeaderCell(
+                $headerCell = new CsvHeaderCell(
                     $headerData[$position], $column
                 );
+
+                $headerCells[] = $headerCell;
+                $column->setHeaderCell($headerCell);
             }
 
             $this->columns[$columnPosition] = $column;
@@ -168,7 +171,13 @@ class CsvFile
      * @throws \Wiakowe\CsvReader\Exception\CellNotFoundException
      */
     public function getCell($row, $column)
-    {}
+    {
+        try {
+            return $this->getRow($row)->getCell($column);
+        } catch (RowNotFoundException $e) {
+            throw new CellNotFoundException(null, 0, $e);
+        }
+    }
 
     /**
      * An iterator which contains the rows.
