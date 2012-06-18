@@ -41,6 +41,8 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider cellDataProvider
+     *
+     * @covers \Wiakowe\CsvReader\Column\CsvColumn::getCells
      */
     public function testGetAllCells(array $cellArray)
     {
@@ -85,6 +87,9 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @covers \Wiakowe\CsvReader\Column\CsvColumn::__construct
+     */
     public function testConstructor()
     {
         foreach ($this->content as $cell) {
@@ -96,6 +101,9 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
         new CsvColumn(1, $this->content);
     }
 
+    /**
+     * @covers \Wiakowe\CsvReader\Column\CsvColumn::getCell
+     */
     public function testGetCell()
     {
         $cell = $this->csvColumn->getCell(1);
@@ -105,6 +113,7 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \Wiakowe\CsvReader\Column\CsvColumn::getCell
      * @expectedException \Wiakowe\CsvReader\Exception\CellNotFoundException
      */
     public function testGetCellWithoutExistingCell()
@@ -112,6 +121,10 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
         $cell = $this->csvColumn->getCell(5);
     }
 
+    /**
+     * @covers \Wiakowe\CsvReader\Column\CsvColumn::setHeaderCell
+     * @covers \Wiakowe\CsvReader\Column\CsvColumn::getHeaderCell
+     */
     public function testGetHeaderCell()
     {
         $this->assertNull($this->csvColumn->getHeaderCell(),
@@ -125,6 +138,9 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
             'The header cell should have the value of the set object.');
     }
 
+    /**
+     * @covers \Wiakowe\CsvReader\Column\CsvColumn::forAll
+     */
     public function testForAll()
     {
         $this->csvColumn->forAll(function($cell) {
@@ -147,6 +163,9 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
             'Should be true if the condition is false for any cell.');
     }
 
+    /**
+     * @covers \Wiakowe\CsvReader\Column\CsvColumn::getColumnPosition
+     */
     public function testGetColumnPosition()
     {
         $this->assertEquals(1, $this->csvColumn->getColumnPosition(),

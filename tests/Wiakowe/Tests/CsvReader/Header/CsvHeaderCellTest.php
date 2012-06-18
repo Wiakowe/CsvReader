@@ -17,12 +17,20 @@ class CsvHeaderCellTest extends \PHPUnit_Framework_TestCase
         $this->csvHeaderCell = new CsvHeaderCell('Name1', $this->csvColumn);
     }
 
+    /**
+     * @covers \Wiakowe\CsvReader\Header\CsvHeaderCell::__construct
+     * @covers \Wiakowe\CsvReader\Header\CsvHeaderCell::getName
+     */
     public function testGetName()
     {
         $this->assertSame('Name1', $this->csvHeaderCell->getName(),
             'The name isn\'t the same as the set one.');
     }
 
+    /**
+     * @covers \Wiakowe\CsvReader\Header\CsvHeaderCell::__construct
+     * @covers \Wiakowe\CsvReader\Header\CsvHeaderCell::getColumn
+     */
     public function testGetColumn()
     {
         $this->assertSame($this->csvColumn, $this->csvHeaderCell->getColumn(),
