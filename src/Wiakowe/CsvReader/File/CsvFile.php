@@ -71,6 +71,12 @@ class CsvFile
         foreach ($columnsCells as $position => $columnData) {
             $column = new CsvColumn($columnPosition, $columnData);
 
+            if ($hasHeaders) {
+                $headerCells[] = new CsvHeaderCell(
+                    $headerData[$position], $column
+                );
+            }
+
             $this->columns[$columnPosition] = $column;
 
             $columnPosition++;
@@ -87,7 +93,9 @@ class CsvFile
      * @return boolean
      */
     public function hasHeader()
-    {}
+    {
+        return !is_null($this->headers);
+    }
 
     /**
      * The headers of the file, or null if there are none.
@@ -95,7 +103,9 @@ class CsvFile
      * @return \Wiakowe\CsvReader\Header\CsvHeader
      */
     public function getHeader()
-    {}
+    {
+        return $this->headers;
+    }
 
     /**
      * The total of rows.
