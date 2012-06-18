@@ -143,11 +143,16 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
      */
     public function testForAll()
     {
-        $this->csvColumn->forAll(function($cell) {
-            $this->assertInstanceOf('\Wiakowe\CsvReader\Cell\CsvCell', $cell,
-                'The cell should be an element of CsvCell.');
+        $phpunit = $this;
 
-            return true;
+        $this->csvColumn->forAll(
+            function($cell) use ($phpunit) {
+                $phpunit->assertInstanceOf(
+                    '\Wiakowe\CsvReader\Cell\CsvCell',
+                    $cell,
+                    'The cell should be an element of CsvCell.');
+
+                return true;
         });
 
         $this->assertTrue($this->csvColumn->forAll(function($cell) {
