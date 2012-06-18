@@ -48,33 +48,16 @@ class CsvFile
             );
         }
 
-        $columnsCells = array();
-        $headerCells  = array();
-
-        $rowPosition = 1;
-
-        while (($rowData =
-            fgetcsv($inputFile, null, $delimiter, $enclosure, $escape)) !== false) {
-
-            $rowCells = array();
-
-            foreach ($rowData as $position => $cellData) {
-                $cell = new CsvCell($cellData);
-
-                $columnsCells[$position][] = $cell;
-                $rowCells[]                = $cell;
-            }
-
-            $this->rows[$rowPosition] = new CsvRow($rowPosition, $rowCells);
-
-            $rowPosition++;
-        }
+        $columnsCells = $this->parseRowData(
+            $inputFile, $delimiter, $enclosure, $escape
+        );
 
         if ($fopenByConstructor) {
             fclose($inputFile);
         }
 
         $columnPosition = 1;
+        $headerCells  = array();
 
         foreach ($columnsCells as $position => $columnData) {
             $column = new CsvColumn($columnPosition, $columnData);
@@ -96,6 +79,42 @@ class CsvFile
         if ($hasHeaders) {
             $this->headers = new CsvHeader($headerCells);
         }
+    }
+
+    /**
+     * Obtains the row data, and returns the columnCells to be able to create
+     * the columns easily afterwards.
+     *
+     * @param $inputFile
+     * @param $delimiter
+     * @param $enclosure
+     * @param $escape
+     * 
+     * @return array
+     */
+    protected function parseRowData($inputFile, $delimiter, $enclosure, $escape)
+    {
+        $rowPosition = 1;
+        $columnsCells = array();
+
+        while (($rowData =
+            fgetcsv($inputFile, null, $delimiter, $enclosure, $escape))
+            !== false) {
+
+            $rowCells = array();
+
+            foreach ($rowData as $position => $cellData) {
+                $cell = new CsvCell($cellData);
+
+                $columnsCells[$position][] = $cell;
+                $rowCells[] = $cell;
+            }
+
+            $this->rows[$rowPosition] = new CsvRow($rowPosition, $rowCells);
+
+            $rowPosition++;
+        }
+        return $columnsCells;
     }
 
     /**
