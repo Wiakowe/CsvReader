@@ -185,9 +185,11 @@ CSVCONTENT
      */
     public function testGetRowIterator()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $iterator = $this->object->getRowIterator();
+
+        $this->assertTrue(is_array($iterator)
+            || $iterator instanceof \Traversable,
+            'To be traversable, it must be an array or an instance of ' .
+                ' \\Traversable');
     }
 }
