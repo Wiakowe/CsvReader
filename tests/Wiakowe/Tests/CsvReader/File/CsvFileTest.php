@@ -40,6 +40,9 @@ CSVCONTENT
         $this->object = new CsvFile($this->filePath);
     }
 
+    /**
+     * @cover Wiakowe\CsvReader\File\CsvFile::__construct
+     */
     public function testConstruct()
     {
         // Remove the following lines when you implement this test.
@@ -48,6 +51,10 @@ CSVCONTENT
         );
     }
 
+    /**
+     * @cover Wiakowe\CsvReader\File\CsvFile::__construct
+     * @expectedException \Wiakowe\CsvReader\Exception\FileNotReadableException
+     */
     public function testConstructNotReadableFile()
     {
         // Remove the following lines when you implement this test.
