@@ -13,6 +13,8 @@ class CsvFileTest extends \PHPUnit_Framework_TestCase
      * @var CsvFile
      */
     protected $object;
+    protected $filePath;
+    protected $csvFile;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -21,11 +23,11 @@ class CsvFileTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $dir = vfsStream::setup('root');
-        $csv = vfsStream::newFile('file.csv');
+        $this->csvFile = vfsStream::newFile('file.csv');
 
-        $dir->addChild($csv);
+        $dir->addChild($this->csvFile);
 
-        $csv->setContent(
+        $this->csvFile->setContent(
 <<<CSVCONTENT
 "header1", "header2"
 "row1",1
@@ -33,8 +35,9 @@ class CsvFileTest extends \PHPUnit_Framework_TestCase
 "row3",3
 CSVCONTENT
         );
+        $this->filePath = vfsStream::url('root/file.csv');
 
-        $this->object = new CsvFile(vfsStream::url('root/file.csv'));
+        $this->object = new CsvFile($this->filePath);
     }
 
     public function testConstruct()
@@ -55,26 +58,33 @@ CSVCONTENT
 
     /**
      * @covers Wiakowe\CsvReader\File\CsvFile::hasHeader
-     * @todo   Implement testHasHeader().
      */
     public function testHasHeader()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertTrue($this->object->hasHeader(),
+            'By default the object is believed to have a header.');
+
+        $csvFile = new CsvFile($this->filePath, false);
+
+        $this->assertFalse($csvFile->hasHeader(),
+            'Has header has to be false if it\'s value is overridden.');
     }
 
     /**
      * @covers Wiakowe\CsvReader\File\CsvFile::getHeader
-     * @todo   Implement testGetHeader().
      */
     public function testGetHeader()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $header = $this->object->getHeader();
+
+        $this->assertInstanceOf('\Wiakowe\CsvReader\Header\CsvHeader', $header);
+
+        $this->assertEquals(2, $header->getNumHeaders());
+
+        $this->assertTrue(
+            $header->getHeaderCellByName('header1') &&
+                $header->getHeaderCellByName('header2'),
+            'Headers must be found for header1 and header2.');
     }
 
     /**
