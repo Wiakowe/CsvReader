@@ -9,13 +9,17 @@ class CsvFile
     /**
      * Opens the file for reading and processes it.
      *
-     * @param $inputFile
+     * @param string|resource $inputFile
      * @param bool $hasHeaders If set to true, the headers are assumed to be on
      * the first row. Otherwise, the first row is considered a data row as well.
+     * @param string $delimiter
+     * @param string $enclosure
+     * @param string $escape
      *
-     * @throws \Wiakowe\CsvReader\Exception\FileNotReadableException
      */
-    public function __construct($inputFile, $hasHeaders = true)
+    public function __construct($inputFile, $hasHeaders = true,
+                                $delimiter = ',', $enclosure = '"',
+                                $escape = '\\')
     {}
 
     /**
