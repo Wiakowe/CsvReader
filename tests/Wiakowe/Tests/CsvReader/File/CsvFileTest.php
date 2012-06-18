@@ -45,10 +45,11 @@ CSVCONTENT
      */
     public function testConstruct()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        // Verify that the construct works as expected with it's allowed
+        // parameters.
+        new CsvFile($this->filePath, true, ',', '"', '\\');
+
+        new CsvFile(fopen($this->filePath, 'r'));
     }
 
     /**
@@ -57,10 +58,27 @@ CSVCONTENT
      */
     public function testConstructNotReadableFile()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        new CsvFile(vfsStream::url('non/existing/file'));
+    }
+
+    /**
+     * @cover Wiakowe\CsvReader\File\CsvFile::__construct
+     * @expectedException \Wiakowe\CsvReader\Exception\FileNotReadableException
+     */
+    public function testConstructNotReadableFile2()
+    {
+        chmod($this->filePath, 0111);
+
+        new CsvFile($this->filePath);
+    }
+
+    /**
+     * @cover Wiakowe\CsvReader\File\CsvFile::__construct
+     * @expectedException \Wiakowe\CsvReader\Exception\FileNotReadableException
+     */
+    public function testConstructNotReadableFile3()
+    {
+        new CsvFile(fopen($this->filePath, 'w'));
     }
 
     /**
