@@ -158,7 +158,25 @@ class CsvFile
      * @throws \Wiakowe\CsvReader\Exception\ColumnNotFoundException
      */
     public function getColumn($column)
-    {}
+    {
+        $method = 'getColumnPosition';
+        if ($column instanceof CsvHeaderCell) {
+            $method = 'getHeaderCell';
+        }
+
+        $resultColumns = array_filter(
+            $this->columns,
+            function($iteratedColumn) use ($column, $method) {
+                return $iteratedColumn->$method() === $column;
+            }
+        );
+
+        if (!count($resultColumns)) {
+            throw new ColumnNotFoundException;
+        }
+
+        return array_pop($resultColumns);
+    }
 
     /**
      * Returns the cell on the given position of row and column.
