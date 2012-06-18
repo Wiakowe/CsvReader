@@ -136,10 +136,11 @@ CSVCONTENT
      */
     public function testGetColumnByPosition()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $column = $this->object->getColumn(1);
+
+        $this->assertInstanceOf('\Wiakowe\CsvReader\Column\CsvColumn', $column);
+
+        $this->assertEquals(1, $column->getColumnPosition());
     }
 
     /**
@@ -147,10 +148,13 @@ CSVCONTENT
      */
     public function testGetColumnByHeaderCell()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $header1 = $this->object->getHeader()->getHeaderCellByName('header1');
+
+        $column = $this->object->getColumn($header1);
+
+        $this->assertInstanceOf('\Wiakowe\CsvReader\Column\CsvColumn', $column);
+
+        $this->assertSame($header1, $column->getHeaderCell());
     }
 
     /**
@@ -159,10 +163,7 @@ CSVCONTENT
      */
     public function testGetColumnThrowsColumnNotFoundByPosition()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->object->getColumn(6);
     }
 
     /**
@@ -171,10 +172,9 @@ CSVCONTENT
      */
     public function testGetColumnThrowsColumnNotFoundByHeaderCell()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $header = \Mockery::mock('\Wiakowe\CsvReader\Header\CsvHeaderCell');
+
+        $this->object->getColumn($header);
     }
 
     /**
