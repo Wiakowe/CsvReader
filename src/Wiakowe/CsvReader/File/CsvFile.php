@@ -1,11 +1,24 @@
 <?php
 namespace Wiakowe\CsvReader\File;
 
+use Wiakowe\CsvReader\Header\CsvHeaderCell;
+use Wiakowe\CsvReader\Header\CsvHeader;
+use Wiakowe\CsvReader\Row\CsvRow;
+use Wiakowe\CsvReader\Column\CsvColumn;
+use Wiakowe\CsvReader\Cell\CsvCell;
+use Wiakowe\CsvReader\Exception\CellNotFoundException;
+use Wiakowe\CsvReader\Exception\RowNotFoundException;
+use Wiakowe\CsvReader\Exception\ColumnNotFoundException;
+
 /**
  * Class which abstracts the access to a csv file.
  */
 class CsvFile
 {
+    protected $rows    = array();
+    protected $columns = array();
+    protected $headers = null;
+
     /**
      * Opens the file for reading and processes it.
      *
@@ -20,7 +33,53 @@ class CsvFile
     public function __construct($inputFile, $hasHeaders = true,
                                 $delimiter = ',', $enclosure = '"',
                                 $escape = '\\')
-    {}
+    {
+        if (!is_resource($inputFile)) {
+            $inputFile = fopen($inputFile, 'r');
+        }
+
+        if ($hasHeaders) {
+            $headerData = fgetcsv(
+                $inputFile, null, $delimiter, $enclosure, $escape
+            );
+        }
+
+        $columnsCells = array();
+        $headerCells  = array();
+
+        $rowPosition = 1;
+
+        while (($rowData =
+            fgetcsv($inputFile, null, $delimiter, $enclosure, $escape)) !== false) {
+
+            $rowCells = array();
+
+            foreach ($rowData as $position => $cellData) {
+                $cell = new CsvCell($cellData);
+
+                $columnsCells[$position][] = $cell;
+                $rowCells[]                = $cell;
+            }
+
+            $this->rows[$rowPosition] = new CsvRow($rowPosition, $rowCells);
+
+            $rowPosition++;
+        }
+
+        $columnPosition = 1;
+
+        foreach ($columnsCells as $position => $columnData) {
+            $column = new CsvColumn($columnPosition, $columnData);
+
+            $this->columns[$columnPosition] = $column;
+
+            $columnPosition++;
+        }
+
+        if ($hasHeaders) {
+            $this->headers = new CsvHeader($headerCells);
+        }
+    }
 
     /**
      * Tells the user if the file has headers.
@@ -44,7 +103,9 @@ class CsvFile
      * @return integer
      */
     public function totalRows()
-    {}
+    {
+        return count($this->rows);
+    }
 
     /**
      * The total of columns.
@@ -52,7 +113,9 @@ class CsvFile
      * @return integer
      */
     public function totalColumns()
-    {}
+    {
+        return count($this->columns);
+    }
 
     /**
      * Returns the row on the given position.
@@ -64,7 +127,13 @@ class CsvFile
      * @throws \Wiakowe\CsvReader\Exception\RowNotFoundException
      */
     public function getRow($row)
-    {}
+    {
+        if (!array_key_exists($row, $this->rows)) {
+            throw new RowNotFoundException;
+        }
+
+        return $this->rows[$row];
+    }
 
     /**
      * Returns the column on the given position.
