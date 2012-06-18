@@ -115,12 +115,13 @@ CSVCONTENT
         $this->assertEquals(1, $row->getRowPosition());
     }
 
+    /**
+     * @covers Wiakowe\CsvReader\File\CsvFile::getRow
+     * @expectedException \Wiakowe\CsvReader\Exception\RowNotFoundException
+     */
     public function testGetRowThrowsRowNotFoundException()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->object->getRow(5);
     }
 
     /**
@@ -147,6 +148,7 @@ CSVCONTENT
 
     /**
      * @covers Wiakowe\CsvReader\File\CsvFile::getColumn
+     * @expectedException \Wiakowe\CsvReader\Exception\ColumnNotFoundException
      */
     public function testGetColumnThrowsColumnNotFoundByPosition()
     {
@@ -158,6 +160,7 @@ CSVCONTENT
 
     /**
      * @covers Wiakowe\CsvReader\File\CsvFile::getColumn
+     * @expectedException \Wiakowe\CsvReader\Exception\ColumnNotFoundException
      */
     public function testGetColumnThrowsColumnNotFoundByHeaderCell()
     {
@@ -169,19 +172,44 @@ CSVCONTENT
 
     /**
      * @covers Wiakowe\CsvReader\File\CsvFile::getCell
-     * @todo   Implement testGetCell().
      */
     public function testGetCell()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $cell = $this->object->getCell(1, 1);
+
+        $this->assertInstanceOf('\Wiakowe\CsvReader\Cell\CsvCell', $cell);
+
+        $this->assertEquals('row1', $cell->getContent(),
+            'The content of the cell should be the one previously set.');
+
+        $header1 = $this->object->getHeader()->getHeaderCellByName('header1');
+
+        $cell2 = $this->object->getCell(1, $header1);
+
+        $this->assertSame($cell, $cell2, 'Both cells should be the same one.');
+    }
+
+
+    /**
+     * @covers Wiakowe\CsvReader\File\CsvFile::getCell
+     * @expectedException \Wiakowe\CsvReader\Exception\CellNotFoundException
+     */
+    public function testGetCellThrowsCellNotFoundException1()
+    {
+        $this->object->getCell(5, 1);
+    }
+
+    /**
+     * @covers Wiakowe\CsvReader\File\CsvFile::getCell
+     * @expectedException \Wiakowe\CsvReader\Exception\CellNotFoundException
+     */
+    public function testGetCellThrowsCellNotFoundException2()
+    {
+        $this->object->getCell(2, 6);
     }
 
     /**
      * @covers Wiakowe\CsvReader\File\CsvFile::getRowIterator
-     * @todo   Implement testGetRowIterator().
      */
     public function testGetRowIterator()
     {
