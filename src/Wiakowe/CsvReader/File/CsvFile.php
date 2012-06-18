@@ -28,15 +28,19 @@ class CsvFile
      * @param string $delimiter
      * @param string $enclosure
      * @param string $escape
-     *
      */
     public function __construct($inputFile, $hasHeaders = true,
                                 $delimiter = ',', $enclosure = '"',
                                 $escape = '\\')
     {
-        if (!is_resource($inputFile)) {
+        $fopenByConstructor = false;
+
+        if (is_string($inputFile)) {
+            $fopenByConstructor = true;
+
             $inputFile = fopen($inputFile, 'r');
         }
+
 
         if ($hasHeaders) {
             $headerData = fgetcsv(
@@ -64,6 +68,10 @@ class CsvFile
             $this->rows[$rowPosition] = new CsvRow($rowPosition, $rowCells);
 
             $rowPosition++;
+        }
+
+        if ($fopenByConstructor) {
+            fclose($inputFile);
         }
 
         $columnPosition = 1;
