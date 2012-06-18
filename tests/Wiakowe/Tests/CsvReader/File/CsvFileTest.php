@@ -53,35 +53,6 @@ CSVCONTENT
     }
 
     /**
-     * @cover Wiakowe\CsvReader\File\CsvFile::__construct
-     * @expectedException \Wiakowe\CsvReader\Exception\FileNotReadableException
-     */
-    public function testConstructNotReadableFile()
-    {
-        new CsvFile(vfsStream::url('non/existing/file'));
-    }
-
-    /**
-     * @cover Wiakowe\CsvReader\File\CsvFile::__construct
-     * @expectedException \Wiakowe\CsvReader\Exception\FileNotReadableException
-     */
-    public function testConstructNotReadableFile2()
-    {
-        chmod($this->filePath, 0111);
-
-        new CsvFile($this->filePath);
-    }
-
-    /**
-     * @cover Wiakowe\CsvReader\File\CsvFile::__construct
-     * @expectedException \Wiakowe\CsvReader\Exception\FileNotReadableException
-     */
-    public function testConstructNotReadableFile3()
-    {
-        new CsvFile(fopen($this->filePath, 'w'));
-    }
-
-    /**
      * @covers Wiakowe\CsvReader\File\CsvFile::hasHeader
      */
     public function testHasHeader()
