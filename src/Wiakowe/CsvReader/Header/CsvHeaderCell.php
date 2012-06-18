@@ -22,6 +22,8 @@ class CsvHeaderCell
 
     /**
      * Gets the name (contents) of the cell.
+     *
+     * @return string
      */
     public function getName()
     {
@@ -30,6 +32,8 @@ class CsvHeaderCell
 
     /**
      * Gets the column associated with this header.
+     *
+     * @retrun CsvColumn
      */
     public function getColumn()
     {
