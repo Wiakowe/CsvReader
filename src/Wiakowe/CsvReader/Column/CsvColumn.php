@@ -32,7 +32,7 @@ class CsvColumn
     /**
      * @param CsvHeaderCell $headerCell
      */
-    public function setCsvHeaderCell(CsvHeaderCell $headerCell)
+    public function setHeaderCell(CsvHeaderCell $headerCell)
     {
         $this->headerCell = $headerCell;
     }

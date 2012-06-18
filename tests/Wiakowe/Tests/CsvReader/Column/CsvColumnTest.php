@@ -119,7 +119,7 @@ class CsvColumnTest extends \PHPUnit_Framework_TestCase
 
         $headerCell = \Mockery::mock('\Wiakowe\CsvReader\Header\CsvHeaderCell');
 
-        $this->csvColumn->setCsvHeaderCell($headerCell);
+        $this->csvColumn->setHeaderCell($headerCell);
 
         $this->assertSame($headerCell, $this->csvColumn->getHeaderCell(),
             'The header cell should have the value of the set object.');
