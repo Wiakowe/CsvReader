@@ -176,5 +176,7 @@ class CsvFile
      * @return \Traversable
      */
     public function getRowIterator()
-    {}
+    {
+        return $this->rows;
+    }
 }
