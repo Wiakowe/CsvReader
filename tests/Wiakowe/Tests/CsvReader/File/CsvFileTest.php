@@ -105,14 +105,55 @@ CSVCONTENT
         $this->assertEquals(1, $row->getRowPosition());
     }
 
-    /**
-     * @covers Wiakowe\CsvReader\File\CsvFile::getColumn
-     */
-    public function testGetColumn()
+    public function testGetRowThrowsRowNotFoundException()
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
-          'This test has not been implemented yet.'
+            'This test has not been implemented yet.'
+        );
+    }
+
+    /**
+     * @covers Wiakowe\CsvReader\File\CsvFile::getColumn
+     */
+    public function testGetColumnByPosition()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
+    }
+
+    /**
+     * @covers Wiakowe\CsvReader\File\CsvFile::getColumn
+     */
+    public function testGetColumnByHeaderCell()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
+    }
+
+    /**
+     * @covers Wiakowe\CsvReader\File\CsvFile::getColumn
+     */
+    public function testGetColumnThrowsColumnNotFoundByPosition()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
+    }
+
+    /**
+     * @covers Wiakowe\CsvReader\File\CsvFile::getColumn
+     */
+    public function testGetColumnThrowsColumnNotFoundByHeaderCell()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
         );
     }
 
