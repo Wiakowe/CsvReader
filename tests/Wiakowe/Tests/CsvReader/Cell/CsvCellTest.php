@@ -20,6 +20,10 @@ class CsvCellTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider cellContentProvider
+     *
+     * @covers \Wiakowe\CsvReader\Cell\CsvCell::__construct
+     * @covers \Wiakowe\CsvReader\Cell\CsvCell::isEmpty
+     * @covers \Wiakowe\CsvReader\Cell\CsvCell::getContent
      */
     public function testCellWithContentIsntEmpty($content)
     {
@@ -36,6 +40,10 @@ class CsvCellTest extends \PHPUnit_Framework_TestCase
                 'converted to string.');
     }
 
+    /**
+     * @covers \Wiakowe\CsvReader\Cell\CsvCell::setColumn
+     * @covers \Wiakowe\CsvReader\Cell\CsvCell::getCsvColumn
+     */
     public function testCellWithSetColumnReturnsIt()
     {
         $cell = new CsvCell('dummy content');
@@ -51,11 +59,15 @@ class CsvCellTest extends \PHPUnit_Framework_TestCase
             'The csv column should be the one that was given with "set".');
     }
 
+    /**
+     * @covers \Wiakowe\CsvReader\Cell\CsvCell::setRow
+     * @covers \Wiakowe\CsvReader\Cell\CsvCell::getCsvRow
+     */
     public function testCellWithSetRowReturnsIt()
     {
         $cell = new CsvCell('dummy content');
 
-        $this->assertNull($cell->getCsvColumn(),
+        $this->assertNull($cell->getCsvRow(),
             'If the row hasn\'t been set, it should be "null".');
 
         $csvRow = \Mockery::mock('Wiakowe\CsvReader\Row\CsvRow');

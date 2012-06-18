@@ -39,6 +39,9 @@ class CsvRowTest extends \PHPUnit_Framework_TestCase
         $this->csvRow = new CsvRow(1, $this->content);
     }
 
+    /**
+     * @covers \Wiakowe\CsvReader\Row\CsvRow::__construct
+     */
     public function testConstructor()
     {
         $cell = \Mockery::mock('\Wiakowe\CsvReader\Cell\CsvCell');
@@ -50,6 +53,9 @@ class CsvRowTest extends \PHPUnit_Framework_TestCase
         new CsvRow(1, array($cell));
     }
 
+    /**
+     * @covers \Wiakowe\CsvReader\Row\CsvRow::getRowPosition
+     */
     public function testGetRowPosition()
     {
         $this->assertEquals(1, $this->csvRow->getRowPosition(),
@@ -57,12 +63,18 @@ class CsvRowTest extends \PHPUnit_Framework_TestCase
                 ' constructor');
     }
 
+    /**
+     * @covers \Wiakowe\CsvReader\Row\CsvRow::getCell
+     */
     public function testGetCellByColumnPosition()
     {
         $this->assertSame($this->cellMock, $this->csvRow->getCell(1),
             'The cell returned must be the one which has the column set as 1.');
     }
 
+    /**
+     * @covers \Wiakowe\CsvReader\Row\CsvRow::getCell
+     */
     public function testGetCellByColumnHeaderCell()
     {
         $this->assertSame(
@@ -74,6 +86,7 @@ class CsvRowTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \Wiakowe\CsvReader\Row\CsvRow::getCell
      * @expectedException \Wiakowe\CsvReader\Exception\CellNotFoundException
      */
     public function testGetCellByNonExistingColumnPositionThrowsException()
@@ -83,6 +96,7 @@ class CsvRowTest extends \PHPUnit_Framework_TestCase
 
 
     /**
+     * @covers \Wiakowe\CsvReader\Row\CsvRow::getCell
      * @expectedException \Wiakowe\CsvReader\Exception\CellNotFoundException
      */
     public function testGetCellByNonExistingColumnHeaderCellThrowsException()
