@@ -41,7 +41,7 @@ CSVCONTENT
     }
 
     /**
-     * @cover Wiakowe\CsvReader\File\CsvFile::__construct
+     * @covers Wiakowe\CsvReader\File\CsvFile::__construct
      */
     public function testConstruct()
     {
