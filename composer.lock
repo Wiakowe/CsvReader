@@ -1,9 +1,13 @@
 {
-    "hash": "f452545f2dc34c2eb346656cc61a462d",
+    "hash": "76aeddd1d70523fbcc252abb5b7c78ed",
     "packages": [
 
     ],
     "packages-dev": [
+        {
+            "package": "mikey179/vfsStream",
+            "version": "v1.0.0"
+        },
         {
             "package": "mockery/mockery",
             "version": "0.7.2"
