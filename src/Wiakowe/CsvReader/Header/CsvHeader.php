@@ -41,7 +41,7 @@ class CsvHeader
     public function getHeaderCellByName($name)
     {
         foreach ($this->cells as $cell) {
-            if ($cell->getName() === $name) {
+            if (strcasecmp($cell->getName(), $name) === 0) {
                 return $cell;
             }
         }
