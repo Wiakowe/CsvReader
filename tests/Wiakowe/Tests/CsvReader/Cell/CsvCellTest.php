@@ -78,6 +78,37 @@ class CsvCellTest extends \PHPUnit_Framework_TestCase
             'The csv row should be the one that was given with "set".');
     }
 
+    public function testCellGetPosition()
+    {
+        $cell = new CsvCell('dummyContent');
+
+        $this->assertEmpty($cell->getPosition());
+
+        $cell->setRow(
+            \Mockery::mock('Wiakowe\CsvReader\Row\CsvRow')
+                ->shouldReceive('getRowPosition')
+                ->andReturn(1)
+                ->getMock()
+        );
+
+        $this->assertEmpty($cell->getPosition());
+
+        $cell->setColumn(
+            \Mockery::mock('Wiakowe\CsvReader\Column\CsvColumn')
+                ->shouldReceive('getColumnPosition')
+                ->andReturn(2)
+                ->getMock()
+        );
+
+        $this->assertEquals(
+            array(
+                'row'    => 1,
+                'column' => 2
+            ),
+            $cell->getPosition()
+        );
+    }
+
     public static function cellContentProvider()
     {
         return array(

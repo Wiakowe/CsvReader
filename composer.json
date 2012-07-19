@@ -1,5 +1,5 @@
 {
-    "name": "Wiakowe/CsvReader",
+    "name": "wiakowe/csv-reader",
     "description": "Simple set of classes to read a csv file.",
     "authors": [
         {
@@ -18,3 +18,4 @@
         "psr-0": { "Wiakowe": "src/" }
     }
 }
+

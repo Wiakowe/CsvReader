@@ -66,6 +66,18 @@ class CsvColumn
         return true;
     }
 
+    public function filter($condition)
+    {
+        $return = array();
+        foreach ($this->cells as $cell) {
+            if (call_user_func($condition, $cell)) {
+                $return[] = $cell;
+            }
+        }
+
+        return $return;
+    }
+
     /**
      * Returns the cell for the given row.
      *

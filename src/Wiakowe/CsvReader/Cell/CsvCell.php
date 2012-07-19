@@ -82,4 +82,16 @@ class CsvCell
     {
         return $this->content;
     }
+
+    public function getPosition()
+    {
+        if (!$this->getCsvColumn() || !$this->getCsvRow()) {
+            return array();
+        }
+
+        return array(
+            'column' => $this->getCsvColumn()->getColumnPosition(),
+            'row'    => $this->getCsvRow()->getRowPosition()
+        );
+    }
 }
