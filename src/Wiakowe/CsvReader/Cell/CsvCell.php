@@ -20,7 +20,12 @@ class CsvCell
      */
     public function __construct($content)
     {
-        $this->content = (string) $content;
+        $content = (string) $content;
+
+        $content = preg_replace('/[[:^print:]]/', '', $content);
+        $content = trim($content);
+
+        $this->content = $content;
     }
 
     /**

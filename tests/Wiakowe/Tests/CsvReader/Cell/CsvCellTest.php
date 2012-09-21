@@ -40,6 +40,13 @@ class CsvCellTest extends \PHPUnit_Framework_TestCase
                 'converted to string.');
     }
 
+    public function testCellGetContentNonPrintableCharacters()
+    {
+        $cell = new CsvCell(" cell\xC2 ");
+
+        $this->assertEquals('cell', $cell->getContent());
+    }
+
     /**
      * @covers \Wiakowe\CsvReader\Cell\CsvCell::setColumn
      * @covers \Wiakowe\CsvReader\Cell\CsvCell::getCsvColumn
