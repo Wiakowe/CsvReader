@@ -110,6 +110,14 @@ class CsvFile
                 $rowCells[] = $cell;
             }
 
+            $emptyCellFunction = function(CsvCell $cell) {
+                return !$cell->isEmpty();
+            };
+
+            if (!array_filter($rowCells, $emptyCellFunction)) {
+                continue;
+            }
+
             $this->rows[$rowPosition] = new CsvRow($rowPosition, $rowCells);
 
             $rowPosition++;
