@@ -60,6 +60,13 @@ class CsvFile
         $headerCells  = array();
 
         foreach ($columnsCells as $position => $columnData) {
+            $columnData = array_filter(
+                $columnData,
+                function(CsvCell $cell) {
+                    return !is_null($cell->getCsvRow());
+                }
+            );
+
             $column = new CsvColumn($columnPosition, $columnData);
 
             if ($hasHeaders) {
