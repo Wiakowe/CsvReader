@@ -33,6 +33,7 @@ class CsvFileTest extends \PHPUnit_Framework_TestCase
 "row1",1
 "row2",2
 "row3",3
+,
 CSVCONTENT
         );
         $this->filePath = vfsStream::url('root/file.csv');
