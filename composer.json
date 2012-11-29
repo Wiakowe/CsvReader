@@ -16,6 +16,11 @@
     },
     "autoload": {
         "psr-0": { "Wiakowe": "src/" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-develop": "1.0.x-dev"
+        }
     }
 }
 
