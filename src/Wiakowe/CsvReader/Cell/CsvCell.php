@@ -22,8 +22,13 @@ class CsvCell
     {
         $content = (string) $content;
 
-        $content = preg_replace('/[[:^print:]]/', '', $content);
-        $content = trim($content);
+        if (mb_detect_encoding($content) != 'UTF-8') {
+            $content = iconv(mb_detect_encoding($content), 'UTF-8', $content);
+        }
+
+        $content = preg_replace('/\p{C}/u', '', $content);
+        $content = preg_replace('/^\p{Z}*/u', '', $content);
+        $content = preg_replace('/\p{Z}*$/u', '', $content);
 
         $this->content = $content;
     }
