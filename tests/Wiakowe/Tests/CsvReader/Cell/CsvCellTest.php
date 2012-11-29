@@ -40,11 +40,26 @@ class CsvCellTest extends \PHPUnit_Framework_TestCase
                 'converted to string.');
     }
 
+    /**
+     * @covers \Wiakowe\CsvReader\Cell\CsvCell::__construct
+     * @covers \Wiakowe\CsvReader\Cell\CsvCell::getContent
+     */
     public function testCellGetContentNonPrintableCharacters()
     {
-        $cell = new CsvCell(" cell\xC2 ");
+        $cell = new CsvCell(" cell\x01 ");
 
         $this->assertEquals('cell', $cell->getContent());
+    }
+
+    /**
+     * @covers \Wiakowe\CsvReader\Cell\CsvCell::__construct
+     * @covers \Wiakowe\CsvReader\Cell\CsvCell::getContent
+     */
+    public function testCellGetContentDoesntStripAccents()
+    {
+        $cell = new CsvCell(" céll\x01 ");
+
+        $this->assertEquals('céll', $cell->getContent());
     }
 
     /**
@@ -85,6 +100,11 @@ class CsvCellTest extends \PHPUnit_Framework_TestCase
             'The csv row should be the one that was given with "set".');
     }
 
+    /**
+     * @dataProvider cellContentProvider
+     *
+     * @covers \Wiakowe\CsvReader\Cell\CsvCell::getPosition
+     */
     public function testCellGetPosition()
     {
         $cell = new CsvCell('dummyContent');
