@@ -31,9 +31,13 @@ class CsvFile
      */
     public function __construct($inputFile, $hasHeaders = true,
                                 $delimiter = ',', $enclosure = '"',
-                                $escape = '\\')
+                                $escape = '\\', $limit = null)
     {
         $fopenByConstructor = false;
+
+        if (!($limit && is_int($limit) && $limit > 0)) {
+            $limit = null;
+        }
 
         if (is_string($inputFile)) {
             $fopenByConstructor = true;
@@ -48,9 +52,7 @@ class CsvFile
             );
         }
 
-        $columnsCells = $this->parseRowData(
-            $inputFile, $delimiter, $enclosure, $escape
-        );
+        $columnsCells = $this->parseRowData($inputFile, $delimiter, $enclosure, $escape, $limit);
 
         if ($fopenByConstructor) {
             fclose($inputFile);
@@ -99,7 +101,7 @@ class CsvFile
      * 
      * @return array
      */
-    protected function parseRowData($inputFile, $delimiter, $enclosure, $escape)
+    protected function parseRowData($inputFile, $delimiter, $enclosure, $escape, $limit)
     {
         $rowPosition = 1;
         $columnsCells = array();
@@ -107,6 +109,10 @@ class CsvFile
         while (($rowData =
             fgetcsv($inputFile, null, $delimiter, $enclosure, $escape))
             !== false) {
+
+            if ($limit && $rowPosition > $limit) {
+                break;
+            }
 
             $rowCells = array();
 
